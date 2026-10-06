@@ -70,11 +70,11 @@
   .hero-shape{position:absolute;right:-8%;top:8%;width:52%;max-width:680px;opacity:.5}
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
   .hero-content{max-width:640px}
-  .hero-logo{position:relative;display:grid;place-items:center;aspect-ratio:1/1;max-width:500px;width:100%;justify-self:end}
-  .hero-logo::before{content:"";position:absolute;inset:6%;border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);transform:rotate(-4deg);box-shadow:0 40px 80px rgba(0,0,0,.35)}
+  .hero-logo{position:relative;display:grid;place-items:center;aspect-ratio:1/1;max-width:470px;width:100%;justify-self:end;align-self:start;margin-top:-40px}
+  .hero-logo::before{content:"";position:absolute;inset:6%;border-radius:32px;background:linear-gradient(145deg,#f4f4f4,#e6e6e6);border:1px solid rgba(255,255,255,.6);transform:rotate(-4deg);box-shadow:0 40px 80px rgba(0,0,0,.45)}
   .hero-logo::after{content:"";position:absolute;inset:6%;border-radius:32px;border:2px solid var(--orange);transform:rotate(4deg);opacity:.55}
   .hero-logo .glow{position:absolute;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(232,144,30,.28),transparent 65%);filter:blur(20px)}
-  .hero-logo img{position:relative;z-index:2;width:78%;height:auto;filter:drop-shadow(0 12px 30px rgba(0,0,0,.4));animation:float 6s ease-in-out infinite}
+  .hero-logo img{position:relative;z-index:2;width:74%;height:auto;animation:float 6s ease-in-out infinite}
   .hero-logo .corner{position:absolute;z-index:2;width:34px;height:34px;border-color:var(--orange);border-style:solid;border-width:0}
   .hero-logo .c1{top:2%;left:2%;border-top-width:3px;border-left-width:3px}
   .hero-logo .c2{bottom:2%;right:2%;border-bottom-width:3px;border-right-width:3px}
@@ -234,7 +234,7 @@
     .foot-grid{grid-template-columns:1fr 1fr}
     .hero-shape{opacity:.2;width:80%;right:-25%}
     .hero-grid{grid-template-columns:1fr;gap:36px}
-    .hero-logo{order:-1;justify-self:start;max-width:340px;aspect-ratio:16/10}
+    .hero-logo{order:-1;justify-self:start;max-width:340px;aspect-ratio:16/10;margin-top:0}
     .hero-logo::before,.hero-logo::after{inset:0}
     .about-visual{max-width:520px}
   }
@@ -307,7 +307,7 @@
     <div class="hero-logo">
       <span class="glow"></span>
       <span class="corner c1"></span><span class="corner c2"></span>
-      <img src="img/logo-inca-blanco.png" alt="Logo INCA Ingeniería y Consultoría">
+      <img src="img/logo-inca.png" alt="Logo INCA Ingeniería y Consultoría">
     </div>
   </div>
 </section>
