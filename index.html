@@ -67,7 +67,11 @@
   /* Hero */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;background:var(--navy);color:#fff;overflow:hidden;padding:120px 0 80px}
   .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 70% 40%,#000 20%,transparent 75%)}
-  .hero-canvas{position:absolute;inset:0;z-index:1;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.55),#000 50%);mask-image:linear-gradient(90deg,rgba(0,0,0,.55),#000 50%)}
+  .hero-shape{position:absolute;right:-8%;top:8%;width:52%;max-width:680px;opacity:.5}
+  /* Fondo de planos animados en secciones */
+  .bp{position:relative;overflow:hidden}
+  .bp>.container{position:relative;z-index:2}
+  .bp-canvas{position:absolute;inset:0;z-index:1;pointer-events:none}
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
   .hero-content{max-width:640px}
   .hero-logo{position:relative;display:grid;place-items:center;aspect-ratio:1/1;max-width:470px;width:100%;justify-self:end;align-self:start;margin-top:-40px}
@@ -245,7 +249,7 @@
     .stat:nth-child(2){border-right:0}
     .stat:nth-child(-n+2){border-bottom:1px solid #eef0f1}
     .foot-grid{grid-template-columns:1fr 1fr}
-    .hero-canvas{opacity:.75;-webkit-mask-image:none;mask-image:none}
+    .hero-shape{opacity:.2;width:80%;right:-25%}
     .hero-grid{grid-template-columns:1fr;gap:36px}
     .hero-logo{order:-1;justify-self:start;max-width:340px;aspect-ratio:16/10;margin-top:0}
     .hero-logo::before,.hero-logo::after{inset:0}
@@ -293,7 +297,13 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="inicio">
-  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <svg class="hero-shape" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+    <path d="M250 40 L460 460 H360 L250 230 L140 460 H40 Z" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+    <path d="M250 110 L410 430 H370 L250 190 L130 430 H90 Z" stroke="rgba(255,255,255,.07)" stroke-width="1.5"/>
+    <path d="M120 400 Q250 300 380 400" stroke="rgba(232,144,30,.55)" stroke-width="3"/>
+    <g stroke="rgba(255,255,255,.18)" stroke-dasharray="4 6"><line x1="0" y1="460" x2="500" y2="460"/><line x1="250" y1="0" x2="250" y2="500"/></g>
+    <circle cx="250" cy="230" r="5" fill="#e8901e"/><circle cx="40" cy="460" r="4" fill="#fff" opacity=".5"/><circle cx="460" cy="460" r="4" fill="#fff" opacity=".5"/>
+  </svg>
   <div class="container hero-grid">
     <div class="hero-content">
       <span class="eyebrow">Ingeniería y consultoría</span>
@@ -366,7 +376,7 @@
 </section>
 
 <!-- ============ SERVICIOS ============ -->
-<section class="services" id="servicios">
+<section class="services bp" id="servicios" data-bp="light" data-bp-avoid=".service, .services-head .btn">
   <div class="container">
     <div class="services-head reveal">
       <div>
@@ -418,7 +428,7 @@
 </section>
 
 <!-- ============ PROCESO ============ -->
-<section class="process">
+<section class="process bp" data-bp="dark" data-bp-avoid=".step">
   <div class="container">
     <div class="center reveal">
       <span class="eyebrow">Cómo trabajamos</span>
@@ -453,7 +463,7 @@
 </section>
 
 <!-- ============ POR QUÉ / SECTORES ============ -->
-<section class="why">
+<section class="why bp" data-bp="light" data-bp-avoid=".why-item, .sector">
   <div class="container why-grid">
     <div class="reveal">
       <span class="eyebrow">¿Por qué INCA?</span>
@@ -494,7 +504,7 @@
 </section>
 
 <!-- ============ CONTACTO ============ -->
-<section class="contact" id="contacto">
+<section class="contact bp" id="contacto" data-bp="dark" data-bp-avoid="form, .ci">
   <div class="container contact-grid">
     <div class="reveal">
       <span class="eyebrow">Contacto</span>
@@ -647,12 +657,13 @@
 
   document.getElementById('year').textContent=new Date().getFullYear();
 
-  // ---------- Fondo animado del inicio: planos técnicos que se dibujan solos ----------
-  (function(){
-    const cv=document.getElementById('heroCanvas'); if(!cv) return;
-    const ctx=cv.getContext('2d'), hero=cv.parentElement;
+  // ---------- Fondo animado de secciones: planos técnicos que se dibujan solos ----------
+  // Se activa en cada <section data-bp="dark|light" data-bp-avoid="selector de tarjetas a no tapar">
+  document.querySelectorAll('[data-bp]').forEach(function(hero){
+    const cv=document.createElement('canvas'); cv.className='bp-canvas'; cv.setAttribute('aria-hidden','true'); hero.prepend(cv);
+    const ctx=cv.getContext('2d'), light=hero.dataset.bp==='light', avoid=hero.dataset.bpAvoid||'';
     const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const RGB={w:'255,255,255',o:'232,144,30'}, ALPHA={w:.22,o:.55};
+    const RGB={w:light?'22,36,44':'255,255,255',o:'232,144,30'}, ALPHA=light?{w:.11,o:.42}:{w:.17,o:.48};
     let W=0,H=0,u=22,items=[],nextSpawn=0,running=false,pausedAt=0,raf=0;
     const rnd=(a,b)=>a+Math.random()*(b-a), ri=(a,b)=>Math.floor(rnd(a,b+1));
 
@@ -711,16 +722,17 @@
 
     function overlaps(x,y,f){
       const hit=(a,b,c,d)=>x<a+c+u && x+f.w+u>a && y<b+d+u && y+f.h+u>b;
-      const card=document.querySelector('.hero-logo'), hr=hero.getBoundingClientRect();
-      if(card){ const r=card.getBoundingClientRect(); if(hit(r.left-hr.left,r.top-hr.top,r.width,r.height)) return true; } // no esconder dibujos detrás del logo
+      const hr=hero.getBoundingClientRect();
+      if(avoid) for(const el of hero.querySelectorAll(avoid)){ // no esconder dibujos detrás de tarjetas
+        const r=el.getBoundingClientRect(); if(hit(r.left-hr.left,r.top-hr.top,r.width,r.height)) return true; }
       return items.some(it=>hit(it.x+it.f.x0,it.y+it.f.y0,it.f.w,it.f.h));
     }
     function spawn(now,full){
       const free=kinds.filter(k=>!items.some(it=>it.kind===k));
       const kind=free.length ? free[ri(0,free.length-1)] : kinds[ri(0,kinds.length-1)];
-      const f=shapes[kind](); if(f.w>W-20 || f.h>Math.min(H,innerHeight)-120) return;
-      for(let tries=0;tries<25;tries++){
-        const vh=Math.min(H,innerHeight); let x=rnd(20,W-f.w-20), y=rnd(90,Math.max(90,vh-f.h-30));
+      const f=shapes[kind](); if(f.w>W-20 || f.h>H-40) return;
+      for(let tries=0;tries<30;tries++){
+        let x=rnd(20,W-f.w-20), y=rnd(20,H-f.h-20);
         x=Math.round(x/24)*24; y=Math.round(y/24)*24;
         if(!overlaps(x,y,f)){ items.push({kind,f,x:x-f.x0,y:y-f.y0,t0:now,draw:full?0:rnd(5000,8000),hold:rnd(4000,6000),fade:2500}); return; }
       }
@@ -753,15 +765,15 @@
     }
     function loop(now){
       if(!running) return;
-      const max=W<700?2:4;
+      const max=W<700?1:2;
       if(items.length<max && now>=nextSpawn){ spawn(now); nextSpawn=now+rnd(1500,3000); }
       render(now); raf=requestAnimationFrame(loop);
     }
     function resize(){
       const dpr=Math.min(devicePixelRatio||1,2); W=hero.clientWidth; H=hero.clientHeight;
       cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-      u=W<700?15:W<1300?18:22; items=[]; nextSpawn=0;
-      if(reduce){ const now=performance.now(); for(let i=0;i<12 && items.length<(W<700?2:4);i++) spawn(now,true); render(now); }
+      u=W<700?14:18; items=[]; nextSpawn=0;
+      if(reduce){ const now=performance.now(); for(let i=0;i<12 && items.length<(W<700?1:2);i++) spawn(now,true); render(now); }
     }
     function setRunning(on){
       if(reduce || on===running) return; running=on; const now=performance.now();
@@ -773,7 +785,7 @@
     let visible=true;
     new IntersectionObserver(es=>{ visible=es[0].isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
     document.addEventListener('visibilitychange',()=>setRunning(visible && !document.hidden));
-  })();
+  });
 </script>
 </body>
 </html>
