@@ -114,6 +114,48 @@
   .mv-card{background:var(--gray-2);border-radius:14px;padding:22px;border-left:4px solid var(--orange)}
   .mv-card h4{font-size:1.1rem;margin-bottom:6px}
   .mv-card p{font-size:.93rem;margin:0}
+  /* Secciones a pantalla completa en computador: cada una cabe en el alto de la pantalla.
+     Los tamaños usan "vh" (alto de pantalla) para ajustarse de portátiles pequeños a monitores grandes. */
+  @media (min-width:981px) and (min-height:600px){
+    /* Inicio */
+    .hero{padding:clamp(88px,13vh,120px) 0 clamp(72px,10vh,96px)}
+    .hero h1{font-size:clamp(2.2rem,min(5.6vw,7.6vh),4.3rem);margin-bottom:clamp(12px,2.4vh,22px)}
+    .hero .eyebrow{margin-bottom:clamp(6px,1.4vh,14px)}
+    .hero p{margin-bottom:clamp(18px,3.4vh,36px);font-size:clamp(1rem,2.2vh,1.15rem)}
+    .hero-badges{margin-top:clamp(20px,4.5vh,56px)}
+    .hero-logo{max-width:min(470px,62vh)}
+
+    /* Servicios, Proyectos y Preguntas ocupan exactamente una pantalla */
+    #servicios,#proyectos,#faq{min-height:calc(100vh - 80px);display:flex;align-items:center;padding:clamp(14px,3vh,48px) 0}
+    #servicios>.container,#proyectos>.container,#faq>.container{width:100%}
+    #servicios .section-title,#proyectos .section-title,#faq .section-title{font-size:clamp(1.6rem,4.4vh,2.6rem);margin-bottom:clamp(4px,1vh,12px)}
+    #servicios .eyebrow,#proyectos .eyebrow,#faq .eyebrow{margin-bottom:clamp(4px,1vh,14px)}
+    #servicios .section-lead,#proyectos .section-lead{font-size:clamp(.92rem,2vh,1.06rem)}
+
+    /* Servicios: tarjetas más compactas */
+    #servicios .services-head{margin-bottom:clamp(10px,2.4vh,44px)}
+    #servicios .services-grid{gap:clamp(12px,2vh,22px)}
+    #servicios .service{padding:clamp(14px,2.6vh,30px) clamp(18px,2vw,26px)}
+    #servicios .service-icon{width:clamp(38px,5.6vh,56px);height:clamp(38px,5.6vh,56px);margin-bottom:clamp(8px,1.8vh,20px);border-radius:12px}
+    #servicios .service-icon svg{width:clamp(20px,2.8vh,28px);height:clamp(20px,2.8vh,28px)}
+    #servicios .service h3{font-size:clamp(1.02rem,2.4vh,1.25rem);margin-bottom:clamp(2px,.8vh,10px)}
+    #servicios .service p{font-size:clamp(.85rem,1.9vh,.95rem);margin-bottom:clamp(6px,1.4vh,16px);line-height:1.45}
+    #servicios .service ul{gap:clamp(1px,.5vh,6px)}
+    #servicios .service li{font-size:clamp(.8rem,1.8vh,.9rem);line-height:1.45}
+
+    /* Proyectos: imágenes que se ajustan al alto disponible */
+    #proyectos .filters{margin:clamp(10px,2.4vh,36px) 0 clamp(12px,2.6vh,40px)}
+    #proyectos .filter{padding:clamp(6px,1.1vh,9px) 18px}
+    #proyectos .projects-grid{gap:clamp(12px,2vh,22px)}
+    #proyectos .project-img{aspect-ratio:auto;height:clamp(90px,calc((100vh - 540px) / 2),240px)}
+    #proyectos .project-body{padding:clamp(10px,1.6vh,22px) 22px}
+    #proyectos .project-body h4{font-size:clamp(1rem,2.2vh,1.15rem);margin-bottom:2px}
+
+    /* Preguntas */
+    #faq .faq-wrap{margin-top:clamp(14px,3vh,48px)}
+    #faq .faq button{padding:clamp(12px,2.3vh,22px) 4px;font-size:clamp(1rem,2.2vh,1.12rem)}
+  }
+
   /* Nosotros compacto: cabe completo en una pantalla de computador */
   @media (min-width:981px){
     #nosotros{min-height:calc(100vh - 80px);display:flex;align-items:center;padding:32px 0}
