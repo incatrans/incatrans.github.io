@@ -663,7 +663,7 @@
     const cv=document.createElement('canvas'); cv.className='bp-canvas'; cv.setAttribute('aria-hidden','true'); hero.prepend(cv);
     const ctx=cv.getContext('2d'), light=hero.dataset.bp==='light', avoid=hero.dataset.bpAvoid||'';
     const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const RGB={w:light?'22,36,44':'255,255,255',o:'232,144,30'}, ALPHA=light?{w:.055,o:.2}:{w:.08,o:.22};
+    const RGB={w:light?'22,36,44':'255,255,255',o:'232,144,30'}, ALPHA=light?{w:.03,o:.11}:{w:.045,o:.12};
     let W=0,H=0,u=22,items=[],nextSpawn=0,running=false,pausedAt=0,raf=0;
     const rnd=(a,b)=>a+Math.random()*(b-a), ri=(a,b)=>Math.floor(rnd(a,b+1));
 
@@ -760,11 +760,11 @@
           if(k<1) tip=[x2,y2];
         }
         if(tip && p<1){ // punta del "lápiz"
-          ctx.fillStyle=`rgba(232,144,30,${.06*a})`; ctx.beginPath(); ctx.arc(tip[0],tip[1],6,0,7); ctx.fill();
-          ctx.fillStyle=`rgba(245,169,64,${.35*a})`; ctx.beginPath(); ctx.arc(tip[0],tip[1],1.8,0,7); ctx.fill();
+          ctx.fillStyle=`rgba(232,144,30,${.03*a})`; ctx.beginPath(); ctx.arc(tip[0],tip[1],6,0,7); ctx.fill();
+          ctx.fillStyle=`rgba(245,169,64,${.2*a})`; ctx.beginPath(); ctx.arc(tip[0],tip[1],1.8,0,7); ctx.fill();
         }
         if(p>.85){ const ta=Math.min(1,(p-.85)/.15)*a; ctx.font='500 11px Inter, sans-serif';
-          for(const t of it.f.t){ ctx.fillStyle=`rgba(${RGB[t[3]]},${(t[3]==='o'?.28:.16)*ta})`; ctx.textAlign=t[4]; ctx.fillText(t[0],t[1],t[2]); } }
+          for(const t of it.f.t){ ctx.fillStyle=`rgba(${RGB[t[3]]},${(t[3]==='o'?.16:.09)*ta})`; ctx.textAlign=t[4]; ctx.fillText(t[0],t[1],t[2]); } }
         ctx.restore();
       }
       if(items.length){ ctx.globalCompositeOperation='destination-out'; ctx.fillStyle='#000';
